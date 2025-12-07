@@ -1116,22 +1116,17 @@ function initNavigation() {
         
         tile.addEventListener('click', () => {
             console.log('Клик на плитку с data-section:', sectionId);
-            
+           
             // Особая обработка для плитки "Сгенерировать отчет"
             if (sectionId === 'pdf-report') {
-                // Показываем секцию графиков перед генерацией PDF
+                // Показываем секцию графиков для выбора периода
                 showSection('charts-container');
-                
-                // Небольшая задержка, чтобы секция успела отобразиться
-                setTimeout(() => {
-                    generatePdf();
-                }, 100);
                 return;
             }
-            
+           
             // Показываем выбранную секцию
             showSection(sectionId);
-            
+           
             // Дополнительная инициализация для определенных секций
             if (sectionId === 'measurement-form') {
                 // Устанавливаем текущую дату и время при открытии формы
