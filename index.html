@@ -24,19 +24,19 @@
         <!-- Главный экран с плитками -->
         <section id="home-screen" class="home-screen">
             <div class="tiles-container">
-                <a href="/measurement.html" class="tile">
+                <a href="/measurement.html" class="tile" data-section="measurement-form">
                     <div class="tile-icon">➕</div>
                     <div class="tile-title">Добавить измерение</div>
                 </a>
-                <a href="/calendar.html" class="tile">
+                <a href="/calendar.html" class="tile" data-section="calendar-container">
                     <div class="tile-icon">📅</div>
                     <div class="tile-title">Календарь измерений</div>
                 </a>
-                <a href="/charts.html" class="tile">
+                <a href="/charts.html" class="tile" data-section="charts-container">
                     <div class="tile-icon">📊</div>
                     <div class="tile-title">Графики</div>
                 </a>
-                <a href="/charts.html" class="tile" id="pdf-report-tile">
+                <a href="/charts.html" class="tile" data-section="pdf-report" id="pdf-report-tile">
                     <div class="tile-icon">📄</div>
                     <div class="tile-title">Сгенерировать отчет</div>
                 </a>
@@ -46,7 +46,8 @@
     <footer>
         <p>&copy; 2024 Дневник давления</p>
     </footer>
-    
-    <script src="/index.js"></script>
+
+    <script src="js/common.js"></script>
+    <script src="js/index.js"></script>
 </body>
 </html>

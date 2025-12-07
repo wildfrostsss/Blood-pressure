@@ -1,32 +1,32 @@
 // Service Worker для Дневника давления
 
-const CACHE_NAME = 'blood-pressure-diary-v1';
+const CACHE_NAME = 'blood-pressure-diary-v2'; // Изменена версия кэша
 const RUNTIME_CACHE = 'blood-pressure-diary-runtime';
 
 // Статические ресурсы для кэширования при установке
 const STATIC_CACHE_URLS = [
-  '/',
-  '/index.html',
-  '/measurement.html',
-  '/calendar.html',
-  '/charts.html',
-  '/style.css',
-  '/index.js',
-  '/measurement.js',
-  '/calendar.js',
-  '/charts.js',
-  '/script.js',
-  '/favicon.ico',
-  '/manifest.json',
+  './',
+  './index.html',
+  './measurement.html',
+  './calendar.html',
+  './charts.html',
+  './style.css',
+  './js/common.js',
+  './js/index.js',
+  './js/measurement.js',
+  './js/calendar.js',
+  './js/charts.js',
+  './favicon.ico',
+  './manifest.json',
   // Иконки приложения
-  '/assets/icons/icon-72x72.png',
-  '/assets/icons/icon-96x96.png',
-  '/assets/icons/icon-128x128.png',
-  '/assets/icons/icon-144x144.png',
-  '/assets/icons/icon-152x152.png',
-  '/assets/icons/icon-192x192.png',
-  '/assets/icons/icon-384x384.png',
-  '/assets/icons/icon-512x512.png'
+  './assets/icons/icon-72x72.png',
+  './assets/icons/icon-96x96.png',
+  './assets/icons/icon-128x128.png',
+  './assets/icons/icon-144x144.png',
+  './assets/icons/icon-152x152.png',
+  './assets/icons/icon-192x192.png',
+  './assets/icons/icon-384x384.png',
+  './assets/icons/icon-512x512.png'
 ];
 
 // Внешние ресурсы для кэширования
