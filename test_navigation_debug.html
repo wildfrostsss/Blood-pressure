@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест навигации - Дневник давления</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Тест навигации - Дневник давления</h1>
+    </header>
+    <main>
+        <!-- Главный экран с плитками -->
+        <section id="home-screen" class="home-screen">
+            <div class="tiles-container">
+                <div class="tile" data-section="measurement-form">
+                    <div class="tile-icon">➕</div>
+                    <div class="tile-title">Добавить измерение</div>
+                </div>
+                <div class="tile" data-section="calendar-container">
+                    <div class="tile-icon">📅</div>
+                    <div class="tile-title">Календарь измерений</div>
+                </div>
+                <div class="tile" data-section="charts-container">
+                    <div class="tile-icon">📊</div>
+                    <div class="tile-title">Графики</div>
+                </div>
+                <div class="tile" data-section="pdf-report">
+                    <div class="tile-icon">📄</div>
+                    <div class="tile-title">Сгенерировать отчет</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секция добавления измерения -->
+        <section id="measurement-form" class="measurement-form hidden">
+            <button class="back-button">← Назад</button>
+            <h2>Добавить измерение</h2>
+            <p>Это форма добавления измерения</p>
+        </section>
+
+        <!-- Секция календаря -->
+        <section id="calendar-container" class="calendar-container hidden">
+            <button class="back-button">← Назад</button>
+            <h2>Календарь измерений</h2>
+            <p>Это календарь измерений</p>
+        </section>
+
+        <!-- Секция графиков -->
+        <section id="charts-container" class="charts-container hidden">
+            <button class="back-button">← Назад</button>
+            <h2>Графики</h2>
+            <p>Это секция графиков</p>
+        </section>
+
+        <!-- Секция списка измерений -->
+        <section id="measurements-list" class="measurements-list hidden">
+            <button class="back-button">← Назад</button>
+            <h2>Измерения за сегодня</h2>
+            <p>Это список измерений</p>
+        </section>
+    </main>
+
+    <script>
+        // Функция для показа выбранной секции и скрытия остальных
+        function showSection(sectionId) {
+            console.log('Вызвана showSection с sectionId:', sectionId);
+            
+            // Скрываем все секции
+            const sections = document.querySelectorAll('section');
+            console.log('Найдено секций:', sections.length);
+            sections.forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Показываем выбранную секцию
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+                console.log('Показана секция:', sectionId);
+            } else {
+                console.error('Секция не найдена:', sectionId);
+            }
+        }
+
+        // Функция для показа главного экрана
+        function showHomeScreen() {
+            showSection('home-screen');
+        }
+
+        // Функция для инициализации навигации
+        function initNavigation() {
+            console.log('Инициализация навигации...');
+            
+            // Добавляем обработчики событий для плиток
+            const tiles = document.querySelectorAll('.tile');
+            console.log('Найдено плиток:', tiles.length);
+            
+            tiles.forEach((tile, index) => {
+                const sectionId = tile.getAttribute('data-section');
+                console.log(`Плитка ${index}: data-section="${sectionId}"`);
+                
+                tile.addEventListener('click', () => {
+                    console.log('Клик на плитку с data-section:', sectionId);
+                    
+                    // Особая обработка для плитки "Сгенерировать отчет"
+                    if (sectionId === 'pdf-report') {
+                        // Показываем секцию графиков перед генерацией PDF
+                        showSection('charts-container');
+                        return;
+                    }
+                    
+                    // Показываем выбранную секцию
+                    showSection(sectionId);
+                });
+            });
+            
+            // Добавляем обработчики событий для кнопок "Назад"
+            const backButtons = document.querySelectorAll('.back-button');
+            console.log('Найдено кнопок "Назад":', backButtons.length);
+            
+            backButtons.forEach(button => {
+                button.addEventListener('click', showHomeScreen);
+            });
+            
+            console.log('Навигация инициализирована');
+        }
+
+        // Запускаем инициализацию навигации после загрузки DOM
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM загружен, начинаем инициализацию');
+            initNavigation();
+            showHomeScreen(); // Показываем главный экран по умолчанию
+        });
+    </script>
+</body>
+</html>

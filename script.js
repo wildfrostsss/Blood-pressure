@@ -1054,8 +1054,11 @@ function initTheme() {
 
 // Функция для показа выбранной секции и скрытия остальных
 function showSection(sectionId) {
+    console.log('Вызвана showSection с sectionId:', sectionId);
+    
     // Скрываем все секции
     const sections = document.querySelectorAll('section');
+    console.log('Найдено секций:', sections.length);
     sections.forEach(section => {
         section.classList.add('hidden');
     });
@@ -1077,11 +1080,42 @@ function showHomeScreen() {
 
 // Функция для инициализации навигации
 function initNavigation() {
+    console.log('Инициализация навигации...');
+    
+    // Проверяем, что DOM готов
+    if (document.readyState === 'loading') {
+        console.log('DOM еще не загружен, ожидание...');
+        document.addEventListener('DOMContentLoaded', initNavigation);
+        return;
+    }
+    
     // Добавляем обработчики событий для плиток
     const tiles = document.querySelectorAll('.tile');
-    tiles.forEach(tile => {
+    console.log('Найдено плиток:', tiles.length);
+    
+    if (tiles.length === 0) {
+        console.error('Плитки не найдены! Проверьте HTML-структуру.');
+        return;
+    }
+    
+    tiles.forEach((tile, index) => {
+        const sectionId = tile.getAttribute('data-section');
+        console.log(`Плитка ${index}: data-section="${sectionId}"`);
+        
+        // Проверяем, что атрибут data-section существует
+        if (!sectionId) {
+            console.error(`Плитка ${index} не имеет атрибута data-section`);
+            return;
+        }
+        
+        // Проверяем, что секция с таким ID существует
+        const targetSection = document.getElementById(sectionId);
+        if (!targetSection && sectionId !== 'pdf-report') { // pdf-report - особый случай
+            console.error(`Секция с ID "${sectionId}" не найдена`);
+        }
+        
         tile.addEventListener('click', () => {
-            const sectionId = tile.getAttribute('data-section');
+            console.log('Клик на плитку с data-section:', sectionId);
             
             // Особая обработка для плитки "Сгенерировать отчет"
             if (sectionId === 'pdf-report') {
@@ -1118,13 +1152,19 @@ function initNavigation() {
     
     // Добавляем обработчики событий для кнопок "Назад"
     const backButtons = document.querySelectorAll('.back-button');
+    console.log('Найдено кнопок "Назад":', backButtons.length);
+    
     backButtons.forEach(button => {
         button.addEventListener('click', showHomeScreen);
     });
+    
+    console.log('Навигация инициализирована');
 }
 
 // Обновленная функция инициализации приложения
 function initApp() {
+    console.log('Начало инициализации приложения...');
+    
     // Инициализируем тему
     initTheme();
     
@@ -1141,6 +1181,7 @@ function initApp() {
     document.getElementById('measurements-container').addEventListener('click', handleDeleteButtonClick);
     
     // Инициализируем навигацию
+    console.log('Инициализация навигации...');
     initNavigation();
     
     // Инициализируем календарь
@@ -1153,6 +1194,7 @@ function initApp() {
     initPdf();
     
     // Убедимся, что по умолчанию показан только главный экран
+    console.log('Показ главного экрана...');
     showHomeScreen();
     
     console.log('Приложение инициализировано');
