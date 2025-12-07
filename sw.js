@@ -7,8 +7,16 @@ const RUNTIME_CACHE = 'blood-pressure-diary-runtime';
 const STATIC_CACHE_URLS = [
   '/',
   '/index.html',
+  '/measurement.html',
+  '/calendar.html',
+  '/charts.html',
   '/style.css',
+  '/index.js',
+  '/measurement.js',
+  '/calendar.js',
+  '/charts.js',
   '/script.js',
+  '/favicon.ico',
   '/manifest.json',
   // Иконки приложения
   '/assets/icons/icon-72x72.png',

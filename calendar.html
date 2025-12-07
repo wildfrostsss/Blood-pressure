@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Календарь измерений - Дневник давления</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="manifest" href="/manifest.json">
+    <!-- Мета-теги для PWA -->
+    <meta name="theme-color" content="#ffffff">
+    <meta name="description" content="Календарь измерений артериального давления">
+</head>
+<body>
+    <header>
+        <h1>Дневник давления</h1>
+        <div class="theme-toggle">
+            <button id="theme-toggle-btn" class="btn-theme" aria-label="Переключить тему">
+                <span class="theme-icon">🌙</span>
+            </button>
+        </div>
+    </header>
+    <main>
+        <!-- Секция календаря -->
+        <section id="calendar-container" class="calendar-container">
+            <div class="navigation-bar">
+                <a href="/" class="back-button">← Назад</a>
+            </div>
+            <h2>Календарь измерений</h2>
+            <div class="calendar-header">
+                <button id="prev-month" class="btn-nav"><</button>
+                <h3 id="current-month"></h3>
+                <button id="next-month" class="btn-nav">></button>
+            </div>
+            <div class="calendar-grid">
+                <div class="calendar-weekdays">
+                    <div class="weekday">Пн</div>
+                    <div class="weekday">Вт</div>
+                    <div class="weekday">Ср</div>
+                    <div class="weekday">Чт</div>
+                    <div class="weekday">Пт</div>
+                    <div class="weekday">Сб</div>
+                    <div class="weekday">Вс</div>
+                </div>
+                <div id="calendar-days" class="calendar-days"></div>
+            </div>
+        </section>
+
+        <!-- Секция списка измерений -->
+        <section id="measurements-list" class="measurements-list hidden">
+            <div class="navigation-bar">
+                <button id="back-to-calendar" class="back-button">← Назад к календарю</button>
+            </div>
+            <h2>Измерения за сегодня</h2>
+            <div id="measurements-container">
+                <p class="no-measurements">Нет измерений за сегодня</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Дневник давления</p>
+    </footer>
+    
+    <script src="/calendar.js"></script>
+</body>
+</html>
