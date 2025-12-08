@@ -13,14 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Инициализация ---
     initializeTheme();
     registerServiceWorker();
-    initNavigation();
     initMeasurementForm();
     initCalendar();
     initCharts();
     initPdf();
-
-    // Показываем главный экран по умолчанию
-    showHomeScreen();
 
     // --- Service Worker ---
     function registerServiceWorker() {
@@ -157,62 +153,6 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`Тема инициализирована: ${theme}`);
     }
 
-    // --- Навигация ---
-    function showSection(sectionId) {
-        console.log('Вызвана showSection с sectionId:', sectionId);
-        document.querySelectorAll('main section').forEach(section => {
-            section.classList.add('hidden');
-        });
-        const targetSection = document.getElementById(sectionId);
-        if (targetSection) {
-            targetSection.classList.remove('hidden');
-            console.log('Показана секция:', sectionId);
-        } else {
-            console.error('Секция не найдена:', sectionId);
-        }
-    }
-
-    function showHomeScreen() {
-        showSection('home-screen');
-    }
-
-    function initNavigation() {
-        console.log('Инициализация навигации...');
-        document.querySelectorAll('.tile').forEach(tile => {
-            tile.addEventListener('click', () => {
-                const sectionId = tile.getAttribute('data-section');
-                console.log('Клик на плитку с data-section:', sectionId);
-                
-                if (sectionId) {
-                    showSection(sectionId);
-                    // Дополнительная логика при переходе
-                    if (sectionId === 'measurement-form') {
-                        setCurrentDateTime();
-                    } else if (sectionId === 'calendar-container') {
-                        generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
-                    } else if (sectionId === 'charts-container') {
-                        handleDateChange(); // Обновляем график при переходе
-                    }
-                }
-                 if (tile.id === 'pdf-report-tile') {
-                    // Специальная логика для кнопки отчета - просто показать графики
-                    showSection('charts-container');
-                }
-            });
-        });
-
-        document.querySelectorAll('.back-button').forEach(button => {
-            button.addEventListener('click', () => {
-                // Специальная логика для кнопки "назад к календарю"
-                if(button.id === 'back-to-calendar') {
-                    showSection('calendar-container');
-                } else {
-                    showHomeScreen();
-                }
-            });
-        });
-        console.log('Навигация инициализирована');
-    }
     
     // --- Форма добавления ---
     function setCurrentDateTime() {
@@ -341,7 +281,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const measurements = getMeasurementsByDate(dateString);
         displayMeasurements(measurements);
-        showSection('measurements-list');
     }
 
     function displayMeasurements(measurements) {

@@ -1,6 +1,6 @@
 // Service Worker для Дневника давления
 
-const CACHE_NAME = 'blood-pressure-diary-v3'; // Возврат к SPA
+const CACHE_NAME = 'blood-pressure-diary-v4'; // Одностраничная архитектура
 const RUNTIME_CACHE = 'blood-pressure-diary-runtime';
 
 // Статические ресурсы для кэширования при установке
