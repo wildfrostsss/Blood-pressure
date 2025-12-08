@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Инициализация ---
     initializeTheme();
     registerServiceWorker();
+    initNavigation();
     initMeasurementForm();
     initCalendar();
     initCharts();
@@ -154,6 +155,54 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     
+    // --- Навигация ---
+    function showSection(sectionId) {
+        document.querySelectorAll('main section').forEach(section => {
+            section.classList.add('hidden');
+        });
+        const sectionToShow = document.getElementById(sectionId);
+        if (sectionToShow) {
+            sectionToShow.classList.remove('hidden');
+        }
+        if (sectionId === 'calendar-section') {
+            const today = new Date().toISOString().split('T')[0];
+            selectDate(today, true);
+        } else if (sectionId === 'charts-section') {
+            handleDateChange();
+        }
+    }
+
+    function initNavigation() {
+        document.querySelectorAll('.tile').forEach(tile => {
+            tile.addEventListener('click', () => {
+                const sectionId = tile.getAttribute('data-section');
+                if (sectionId) {
+                    showSection(sectionId);
+                }
+            });
+        });
+
+        document.querySelectorAll('.btn-back').forEach(button => {
+            button.addEventListener('click', () => {
+                showSection('home-screen');
+            });
+        });
+
+        // Специальная логика для плитки отчета
+        const pdfTile = document.getElementById('pdf-report-tile');
+        if (pdfTile) {
+            pdfTile.addEventListener('click', (event) => {
+                event.stopPropagation(); // Предотвращаем стандартный переход по data-section
+                showSection('charts-section');
+                // Даем время на отрисовку и прокручиваем
+                setTimeout(() => {
+                    document.getElementById('generate-pdf-btn').focus();
+                    document.getElementById('generate-pdf-btn').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            });
+        }
+    }
+
     // --- Форма добавления ---
     function setCurrentDateTime() {
         const datetimeInput = document.getElementById('datetime');
@@ -201,6 +250,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         notification.parentNode.removeChild(notification);
                     }
                 }, 3000);
+
+                showSection('home-screen');
             });
         }
     }
@@ -268,7 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return dayElement;
     }
 
-    function selectDate(dateString) {
+    function selectDate(dateString, showMeasurementsList = true) {
         selectedDate = dateString;
         generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
         
@@ -281,6 +332,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const measurements = getMeasurementsByDate(dateString);
         displayMeasurements(measurements);
+        
+        if (showMeasurementsList) {
+            showSection('measurements-list');
+        }
     }
 
     function displayMeasurements(measurements) {
