@@ -1,6 +1,6 @@
 // Service Worker для Дневника давления
 
-const CACHE_NAME = 'blood-pressure-diary-v5-final-cleanup';
+const CACHE_NAME = 'blood-pressure-diary-v6-hotfix';
 
 const CACHE_FILES = [
     './',

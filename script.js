@@ -2,6 +2,10 @@
 
 console.log('Дневник давления: script.js загружен.');
 
+// --- Глобальные константы ---
+const STORAGE_KEY = 'blood_pressure_measurements';
+const THEME_KEY = 'blood_pressure_theme';
+
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM загружен, запускается общая инициализация.');
 
@@ -23,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function registerServiceWorker() {
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
+                navigator.serviceWorker.register('./sw.js')
                     .then(registration => {
                         console.log('Service Worker зарегистрирован с областью:', registration.scope);
                         registration.addEventListener('updatefound', () => {
@@ -64,9 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Хранилище ---
-    const STORAGE_KEY = 'blood_pressure_measurements';
-    const THEME_KEY = 'blood_pressure_theme';
+    // --- Хранилище (константы перенесены в начало файла) ---
 
     function saveMeasurement(systolic, diastolic, pulse, datetime) {
         const measurements = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
